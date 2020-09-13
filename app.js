@@ -1,17 +1,7 @@
-const create2dArray = (rows, cols) =>
-  Array.from({ length: rows }, () => Array.from({ length: cols }, () => 0));
+const createGrid = (rows, cols, mapFn = () => 0) =>
+  Array.from({ length: rows }, () => Array.from({ length: cols }, mapFn));
 
-const setupGrid = (rows, cols) => {
-  const grid = create2dArray(rows, cols);
-
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      grid[i][j] = Math.floor(Math.random() * 2);
-    }
-  }
-
-  return grid;
-};
+const randomBinary = () => Math.floor(Math.random() * 2);
 
 const countAliveNeighbors = (grid, rows, cols) => (row, col) => {
   let sum = 0;
@@ -26,7 +16,7 @@ const countAliveNeighbors = (grid, rows, cols) => (row, col) => {
 };
 
 const nextGeneration = (rows, cols) => (state) => {
-  let next = create2dArray(rows, cols);
+  let next = createGrid(rows, cols);
   const countNeighbors = countAliveNeighbors(state, rows, cols);
 
   for (let row = 0; row < rows; row++) {
@@ -66,7 +56,7 @@ const showState = (ctx, rows, cols, cellSize) => (state) => {
   }
 };
 
-const main = (width, height, cellSize, fps) => {
+const init = (width, height, cellSize, fps) => {
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
 
@@ -80,7 +70,7 @@ const main = (width, height, cellSize, fps) => {
 
   const speed = 1000 / fps;
 
-  let state = setupGrid(rows, cols);
+  let state = createGrid(rows, cols, randomBinary);
 
   const life = () => {
     show(state);
@@ -91,11 +81,11 @@ const main = (width, height, cellSize, fps) => {
 
   const restart = () => {
     clearInterval(interval);
-    state = setupGrid(rows, cols);
+    state = createGrid(rows, cols, randomBinary);
     interval = setInterval(life, speed);
   };
 
   restartButton.addEventListener("click", restart);
 };
 
-main(800, 600, 10, 10);
+init(800, 600, 10, 10);
