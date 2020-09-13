@@ -1,11 +1,34 @@
 body {
   background: #333;
 }
+
+header {
+  text-align: center;
+}
+
 header h1 {
   font: 24pt sans-serif;
-  text-align: center;
   color: #ddd;
 }
+
+#restart {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  font-size: 16pt;
+  padding: 0.5rem;
+  background: #333;
+  color: #ddd;
+  border: 1px solid #ddd;
+  outline: 0;
+  cursor: pointer;
+}
+
+#restart:active {
+  color: #333;
+  background: #ddd;
+}
+
 canvas {
   display: block;
   margin: 0 auto;

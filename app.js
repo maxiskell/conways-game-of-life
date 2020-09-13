@@ -70,11 +70,15 @@ const main = (width, height, cellSize, fps) => {
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
 
+  const restartButton = document.querySelector("#restart");
+
   const rows = Math.floor(height / cellSize);
   const cols = Math.floor(width / cellSize);
 
   const next = nextGeneration(rows, cols);
   const show = showState(ctx, rows, cols, cellSize);
+
+  const speed = 1000 / fps;
 
   let state = setupGrid(rows, cols);
 
@@ -83,7 +87,15 @@ const main = (width, height, cellSize, fps) => {
     state = next(state);
   };
 
-  setInterval(life, 1000 / fps);
+  let interval = setInterval(life, speed);
+
+  const restart = () => {
+    clearInterval(interval);
+    state = setupGrid(rows, cols);
+    interval = setInterval(life, speed);
+  };
+
+  restartButton.addEventListener("click", restart);
 };
 
 main(800, 600, 10, 10);
