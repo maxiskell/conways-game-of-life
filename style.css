@@ -1,0 +1,12 @@
+body {
+  background: #333;
+}
+header h1 {
+  font: 24pt sans-serif;
+  text-align: center;
+  color: #ddd;
+}
+canvas {
+  display: block;
+  margin: 0 auto;
+}
